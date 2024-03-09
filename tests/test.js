@@ -5,20 +5,22 @@ function calc() {
     return a + b;
 }
 
+const secondInterval = () => {
+    console.log("Second interval tick");
+    try {
+        clearTimeout(0)
+    } catch (e) {
+        console.log(e);
+    }
+}
+const firstInterval = () => {
+    console.log("First interval tick");
+}
+
 try {
     console.log("First")
-    setInterval(() => {
-        console.log("interval_tick")
-    }, 1000)
-    setTimeout(() => {
-        setInterval(() => {
-            console.log("interval_tick 2")
-            setTimeout(() => {
-                console.log("timeout 2")
-            }, 2000)
-        }, 1000)
-        console.log("timeout")
-    }, 2000)
+    setTimeout(secondInterval, 500)
+    setTimeout(firstInterval, 2000)
     console.log("third")
 } catch (e) {
     console.log(e)
