@@ -3,9 +3,23 @@ project(sidejs)
 
 set(CMAKE_CXX_STANDARD 20)
 
-include_directories(third_party/JavaScriptCore/includes)
+include_directories(
+        third_party/JavaScriptCore/includes
+        third_party/libuv
+)
 
-add_executable(sidejs main.cpp)
+add_executable(
+        sidejs
+        src/sidejs.cpp
+        src/addons/console.cpp
+        src/addons/console.h
+        src/runtime/runtime.cpp
+        src/runtime/runtime.h
+        src/utils.cpp
+        src/utils.h
+        src/addons/timers.cpp
+        src/addons/timers.h
+)
 
 target_link_libraries(sidejs PRIVATE ${CMAKE_SOURCE_DIR}/lib/libJavaScriptCore.a)
 target_link_libraries(sidejs PRIVATE ${CMAKE_SOURCE_DIR}/lib/libWTF.a)
@@ -13,3 +27,4 @@ target_link_libraries(sidejs PRIVATE ${CMAKE_SOURCE_DIR}/lib/libbmalloc.a)
 target_link_libraries(sidejs PUBLIC icui18n)
 target_link_libraries(sidejs PUBLIC icuuc)
 target_link_libraries(sidejs PUBLIC atomic)
+target_link_libraries(sidejs PRIVATE ${CMAKE_SOURCE_DIR}/lib/libuv.a)

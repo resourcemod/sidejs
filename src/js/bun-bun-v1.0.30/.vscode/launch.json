@@ -1,0 +1,952 @@
+{
+  // Notes:
+  // - BUN_GARBAGE_COLLECTOR_LEVEL=2 forces GC to run after every `expect()`, but is slower
+  // - BUN_DEBUG_QUIET_LOGS=1 disables the debug logs
+  // - FORCE_COLOR=1 forces colors in the terminal
+  // - "${workspaceFolder}/test" is the cwd for `bun test` so it matches CI, we should fix this later
+  // - "cppvsdbg" is used instead of "lldb" on Windows, because "lldb" is too slow
+  "version": "0.2.0",
+  "configurations": [
+    // bun test [file]
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun test [file]",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["test", "${file}"],
+      "cwd": "${workspaceFolder}/test",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun test [file] (fast)",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["test", "${file}"],
+      "cwd": "${workspaceFolder}/test",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "0"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun test [file] (verbose)",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["test", "${file}"],
+      "cwd": "${workspaceFolder}/test",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "0",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun test [file] --watch",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["test", "--watch", "${file}"],
+      "cwd": "${workspaceFolder}/test",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun test [file] --hot",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["test", "--hot", "${file}"],
+      "cwd": "${workspaceFolder}/test",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun test [file] --inspect",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["test", "${file}"],
+      "cwd": "${workspaceFolder}/test",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2",
+        "BUN_INSPECT": "ws://localhost:0/?wait=1"
+      },
+      "console": "internalConsole",
+      "serverReadyAction": {
+        "pattern": "https://debug.bun.sh/#localhost:([0-9]+)/",
+        "uriFormat": "https://debug.bun.sh/#ws://localhost:%s/",
+        "action": "openExternally"
+      }
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun test [file] --inspect-brk",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["test", "${file}"],
+      "cwd": "${workspaceFolder}/test",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2",
+        "BUN_INSPECT": "ws://localhost:0/?break=1"
+      },
+      "console": "internalConsole",
+      "serverReadyAction": {
+        "pattern": "https://debug.bun.sh/#localhost:([0-9]+)/",
+        "uriFormat": "https://debug.bun.sh/#ws://localhost:%s/",
+        "action": "openExternally"
+      }
+    },
+    // bun run [file]
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun run [file]",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["run", "${fileBasename}"],
+      "cwd": "${fileDirname}",
+      "env": {
+        "FORCE_COLOR": "0",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun run [file] (fast)",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["run", "${fileBasename}"],
+      "cwd": "${fileDirname}",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "0"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun run [file] (verbose)",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["run", "${fileBasename}"],
+      "cwd": "${fileDirname}",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "0",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun run [file] --watch",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["run", "--watch", "${fileBasename}"],
+      "cwd": "${fileDirname}",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun run [file] --hot",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["run", "--hot", "${fileBasename}"],
+      "cwd": "${fileDirname}",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun run [file] --inspect",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["run", "${fileBasename}"],
+      "cwd": "${fileDirname}",
+      "env": {
+        "FORCE_COLOR": "0",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2",
+        "BUN_INSPECT": "ws://localhost:0/?wait=1"
+      },
+      "console": "internalConsole",
+      "serverReadyAction": {
+        "pattern": "https://debug.bun.sh/#localhost:([0-9]+)/",
+        "uriFormat": "https://debug.bun.sh/#ws://localhost:%s/",
+        "action": "openExternally"
+      }
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun run [file] --inspect-brk",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["run", "${fileBasename}"],
+      "cwd": "${fileDirname}",
+      "env": {
+        "FORCE_COLOR": "0",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2",
+        "BUN_INSPECT": "ws://localhost:0/?break=1"
+      },
+      "console": "internalConsole",
+      "serverReadyAction": {
+        "pattern": "https://debug.bun.sh/#localhost:([0-9]+)/",
+        "uriFormat": "https://debug.bun.sh/#ws://localhost:%s/",
+        "action": "openExternally"
+      }
+    },
+    // bun test [...]
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun test [...]",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["test", "${input:testName}"],
+      "cwd": "${workspaceFolder}/test",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun test [...] (fast)",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["test", "${input:testName}"],
+      "cwd": "${workspaceFolder}/test",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "0"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun test [...] (verbose)",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["test", "${input:testName}"],
+      "cwd": "${workspaceFolder}/test",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "0",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun test [...] --watch",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["test", "--watch", "${input:testName}"],
+      "cwd": "${workspaceFolder}/test",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun test [...] --hot",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["test", "--hot", "${input:testName}"],
+      "cwd": "${workspaceFolder}/test",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun test [...] --inspect",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["test", "${input:testName}"],
+      "cwd": "${workspaceFolder}/test",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2",
+        "BUN_INSPECT": "ws://localhost:0/?wait=1"
+      },
+      "console": "internalConsole",
+      "serverReadyAction": {
+        "pattern": "https://debug.bun.sh/#localhost:([0-9]+)/",
+        "uriFormat": "https://debug.bun.sh/#ws://localhost:%s/",
+        "action": "openExternally"
+      }
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun test [...] --inspect-brk",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["test", "${input:testName}"],
+      "cwd": "${workspaceFolder}/test",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2",
+        "BUN_INSPECT": "ws://localhost:0/?break=1"
+      },
+      "console": "internalConsole",
+      "serverReadyAction": {
+        "pattern": "https://debug.bun.sh/#localhost:([0-9]+)/",
+        "uriFormat": "https://debug.bun.sh/#ws://localhost:%s/",
+        "action": "openExternally"
+      }
+    },
+    // bun test [*]
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun test [*]",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["test"],
+      "cwd": "${workspaceFolder}/test",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun test [*] (fast)",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["test"],
+      "cwd": "${workspaceFolder}/test",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "0"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun test [*] --inspect",
+      "program": "${workspaceFolder}/build/bun-debug",
+      "args": ["test"],
+      "cwd": "${workspaceFolder}/test",
+      "env": {
+        "FORCE_COLOR": "1",
+        "BUN_DEBUG_QUIET_LOGS": "1",
+        "BUN_GARBAGE_COLLECTOR_LEVEL": "2",
+        "BUN_INSPECT": "ws://localhost:0/"
+      },
+      "console": "internalConsole",
+      "serverReadyAction": {
+        "pattern": "https://debug.bun.sh/#localhost:([0-9]+)/",
+        "uriFormat": "https://debug.bun.sh/#ws://localhost:%s/",
+        "action": "openExternally"
+      }
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "bun test [*] (ci)",
+      "program": "node",
+      "args": ["src/runner.node.mjs"],
+      "cwd": "${workspaceFolder}/packages/bun-internal-test",
+      "console": "internalConsole"
+    },
+    // Windows: bun test [file]
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun test [file]",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["test", "${file}"],
+      "cwd": "${workspaceFolder}/test",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "1"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun test --only [file]",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["test", "--only", "${file}"],
+      "cwd": "${workspaceFolder}/test",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "1"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun test [file] (fast)",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["test", "${file}"],
+      "cwd": "${workspaceFolder}/test",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "1"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun test [file] (verbose)",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["test", "${file}"],
+      "cwd": "${workspaceFolder}/test",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "0"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun test [file] --inspect",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["test", "${file}"],
+      "cwd": "${workspaceFolder}/test",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "1"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "2"
+        },
+        {
+          "name": "BUN_INSPECT",
+          "value": "ws://localhost:0/?wait=1"
+        }
+      ],
+      "serverReadyAction": {
+        "pattern": "https://debug.bun.sh/#localhost:([0-9]+)/",
+        "uriFormat": "https://debug.bun.sh/#ws://localhost:%s/",
+        "action": "openExternally"
+      }
+    },
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun test [file] --inspect-brk",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["test", "${file}"],
+      "cwd": "${workspaceFolder}/test",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "1"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "2"
+        },
+        {
+          "name": "BUN_INSPECT",
+          "value": "ws://localhost:0/?break=1"
+        }
+      ],
+      "serverReadyAction": {
+        "pattern": "https://debug.bun.sh/#localhost:([0-9]+)/",
+        "uriFormat": "https://debug.bun.sh/#ws://localhost:%s/",
+        "action": "openExternally"
+      }
+    },
+    // Windows: bun run [file]
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun run [file]",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["run", "${fileBasename}"],
+      "cwd": "${fileDirname}",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "1"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun run [file] (fast)",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["run", "${fileBasename}"],
+      "cwd": "${fileDirname}",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "1"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun run [file] (verbose)",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["run", "${fileBasename}"],
+      "cwd": "${fileDirname}",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "0"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun run [file] --inspect",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["run", "${fileBasename}"],
+      "cwd": "${fileDirname}",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "1"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "2"
+        },
+        {
+          "name": "BUN_INSPECT",
+          "value": "ws://localhost:0/?wait=1"
+        }
+      ],
+      "serverReadyAction": {
+        "pattern": "https://debug.bun.sh/#localhost:([0-9]+)/",
+        "uriFormat": "https://debug.bun.sh/#ws://localhost:%s/",
+        "action": "openExternally"
+      }
+    },
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun run [file] --inspect-brk",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["run", "${fileBasename}"],
+      "cwd": "${fileDirname}",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "1"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "2"
+        },
+        {
+          "name": "BUN_INSPECT",
+          "value": "ws://localhost:0/?break=1"
+        }
+      ],
+      "serverReadyAction": {
+        "pattern": "https://debug.bun.sh/#localhost:([0-9]+)/",
+        "uriFormat": "https://debug.bun.sh/#ws://localhost:%s/",
+        "action": "openExternally"
+      }
+    },
+    // Windows: bun test [...]
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun test [...]",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["test", "${input:testName}"],
+      "cwd": "${workspaceFolder}/test",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "1"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun test [...] (fast)",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["test", "${input:testName}"],
+      "cwd": "${workspaceFolder}/test",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "1"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun test [...] (verbose)",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["test", "${input:testName}"],
+      "cwd": "${workspaceFolder}/test",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "0"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun test [...] --watch",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["test", "--watch", "${input:testName}"],
+      "cwd": "${workspaceFolder}/test",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "1"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun test [...] --hot",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["test", "--hot", "${input:testName}"],
+      "cwd": "${workspaceFolder}/test",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "1"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun test [...] --inspect",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["test", "${input:testName}"],
+      "cwd": "${workspaceFolder}/test",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "1"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "2"
+        },
+        {
+          "name": "BUN_INSPECT",
+          "value": "ws://localhost:0/?wait=1"
+        }
+      ],
+      "serverReadyAction": {
+        "pattern": "https://debug.bun.sh/#localhost:([0-9]+)/",
+        "uriFormat": "https://debug.bun.sh/#ws://localhost:%s/",
+        "action": "openExternally"
+      }
+    },
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun test [...] --inspect-brk",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["test", "${input:testName}"],
+      "cwd": "${workspaceFolder}/test",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "1"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "2"
+        },
+        {
+          "name": "BUN_INSPECT",
+          "value": "ws://localhost:0/?break=1"
+        }
+      ],
+      "serverReadyAction": {
+        "pattern": "https://debug.bun.sh/#localhost:([0-9]+)/",
+        "uriFormat": "https://debug.bun.sh/#ws://localhost:%s/",
+        "action": "openExternally"
+      }
+    },
+    // Windows: bun test [*]
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun test [*]",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["test"],
+      "cwd": "${workspaceFolder}/test",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "1"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun test [*] (fast)",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["test"],
+      "cwd": "${workspaceFolder}/test",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "1"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun test [*] --inspect",
+      "program": "${workspaceFolder}/build/bun-debug.exe",
+      "args": ["test"],
+      "cwd": "${workspaceFolder}/test",
+      "environment": [
+        {
+          "name": "FORCE_COLOR",
+          "value": "1"
+        },
+        {
+          "name": "BUN_DEBUG_QUIET_LOGS",
+          "value": "0"
+        },
+        {
+          "name": "BUN_GARBAGE_COLLECTOR_LEVEL",
+          "value": "2"
+        },
+        {
+          "name": "BUN_INSPECT",
+          "value": "ws://localhost:0/"
+        }
+      ],
+      "serverReadyAction": {
+        "pattern": "https://debug.bun.sh/#localhost:([0-9]+)/",
+        "uriFormat": "https://debug.bun.sh/#ws://localhost:%s/",
+        "action": "openExternally"
+      }
+    },
+    {
+      "type": "cppvsdbg",
+      "request": "launch",
+      "name": "Windows: bun test [*] (ci)",
+      "program": "node",
+      "args": ["src/runner.node.mjs"],
+      "cwd": "${workspaceFolder}/packages/bun-internal-test",
+      "console": "internalConsole"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "commandLine",
+      "type": "promptString",
+      "description": "Usage: bun [...]"
+    },
+    {
+      "id": "testName",
+      "type": "promptString",
+      "description": "Usage: bun test [...]"
+    }
+  ]
+}
