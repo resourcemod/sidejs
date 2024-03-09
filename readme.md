@@ -13,7 +13,7 @@ Javascript runtime based on the JavaScriptCore engine, supporting node modules a
 - [x] JavaScriptCore
 - [x] Libuv
 - [x] https://nodejs.org/api/console.html (log, error, log aliases)
-- [ ] https://nodejs.org/api/timers.html - WIP (setTimeout, setInterval)
+- [ ] https://nodejs.org/api/timers.html - WIP (setTimeout, setInterval, clearTimeout, clearInterval)
 - [ ] http1
 - [ ] http2
 - [ ] https
