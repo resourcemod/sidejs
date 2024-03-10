@@ -118,7 +118,7 @@ JSValueRef timers::setInterval(JSContextRef ctx, JSObjectRef function, JSObjectR
 
 JSValueRef timers::clearTimeout(JSContextRef ctx, JSObjectRef function, JSObjectRef object, size_t argumentCount,
                                 const JSValueRef *arguments, JSValueRef *exception) {
-    if (!JSObjectIsFunction(ctx, JSValueToObject(ctx, arguments[0], exception))) {
+    if (!JSObjectIsFunction(ctx, JSValueToObject(ctx, arguments[0], exception))) { // todo: check if it's actually work
         JS_CREATE_EXCEPTION(exception, ctx, "Error: first argument must be function.")
         return ex;
     }
@@ -128,6 +128,10 @@ JSValueRef timers::clearTimeout(JSContextRef ctx, JSObjectRef function, JSObject
 
 JSValueRef timers::clearInterval(JSContextRef ctx, JSObjectRef function, JSObjectRef object, size_t argumentCount,
                                  const JSValueRef *arguments, JSValueRef *exception) {
+    if (!JSObjectIsFunction(ctx, JSValueToObject(ctx, arguments[0], exception))) { // todo: check if it's actually work
+        JS_CREATE_EXCEPTION(exception, ctx, "Error: first argument must be function.")
+        return ex;
+    }
     uv_timer_stop(&sidejsRuntime->timerRefs[arguments[0]]);
     return nullptr;
 }

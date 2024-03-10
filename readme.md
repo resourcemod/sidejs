@@ -35,3 +35,4 @@ Javascript runtime based on the JavaScriptCore engine, supporting node modules a
 - [ ] https://nodejs.org/api/tty.html
 - [ ] https://nodejs.org/api/url.html
 - [ ] https://nodejs.org/api/zlib.html
+- [ ] https://nodejs.org/api/packages.html
