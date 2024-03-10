@@ -8,6 +8,7 @@
 #include <sstream>
 #include <fstream>
 #include "../addons/timers.h"
+#include "../addons/binding.h"
 
 int runtime::loadFromFile(const std::string& path) {
     if (!this->fileExists(path)) {
@@ -43,5 +44,12 @@ bool runtime::useTimers() {
     JSObjectRef globalObject = JSContextGetGlobalObject(this->globalContext);
     ASSERT_NULL(globalObject);
     new timers(this, globalObject);
+    return false;
+}
+
+bool runtime::useBinding() {
+    JSObjectRef globalObject = JSContextGetGlobalObject(this->globalContext);
+    ASSERT_NULL(globalObject);
+    new binding(this, globalObject);
     return false;
 }

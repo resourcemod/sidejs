@@ -11,6 +11,8 @@ int main(int argc, const char * argv[]) {
 
     sidejsRuntime->useConsole();
     sidejsRuntime->useTimers();
+    sidejsRuntime->useBinding();
+
     if (argc > 0) {
         sidejsRuntime->loadFromFile(argv[1]);
         uv_run(sidejsRuntime->loop, UV_RUN_DEFAULT);

@@ -31,6 +31,7 @@ public:
 
     bool useConsole();
     bool useTimers();
+    bool useBinding();
 
     JSValueRef evaluate(const std::string &content) const;
 };
